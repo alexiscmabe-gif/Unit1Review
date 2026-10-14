@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 1 Review: Motion, Forces, and Newton's Laws</title>
+<style>
+  :root {
+    --bg: #f4f6fa;
+    --card: #ffffff;
+    --text: #1b2330;
+    --muted: #56627a;
+    --accent: #2b67b0;
+    --on-accent: #ffffff;
+    --accent-soft: #e6eef9;
+    --good: #17703f;
+    --good-bg: #e3f4ea;
+    --bad: #a8301c;
+    --bad-bg: #fcebe7;
+    --border: #d3dae6;
+    --bar-bg: #e3e8f0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11151c;
+      --card: #1a202a;
+      --text: #e9edf3;
+      --muted: #a4aec0;
+      --accent: #7db2f5;
+      --on-accent: #0e1520;
+      --accent-soft: #223149;
+      --good: #6fd69b;
+      --good-bg: #16301f;
+      --bad: #ff9a85;
+      --bad-bg: #3b1d17;
+      --border: #313a49;
+      --bar-bg: #2a3342;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.45;
+    font-size: 18px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 60px; }
+  header { margin-bottom: 18px; }
+  header h1 { font-size: 1.55rem; margin: 0 0 4px; line-height: 1.2; }
+  header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  h2 { margin: 0 0 12px; font-size: 1.25rem; line-height: 1.35; }
+  h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.9rem; }
+
+  button { font: inherit; cursor: pointer; }
+  .btn {
+    background: var(--accent);
+    color: var(--on-accent);
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: 600;
+    min-height: 48px;
+  }
+  .btn:hover { filter: brightness(1.06); }
+  .btn.secondary {
+    background: transparent;
+    color: var(--accent);
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .linkbtn {
+    background: none; border: none; color: var(--accent);
+    text-decoration: underline; padding: 8px 0; min-height: 44px;
+  }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* Start screen */
+  .packet-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; margin-bottom: 8px;
+    border: 1px solid var(--border); border-radius: 10px;
+    cursor: pointer; background: var(--card);
+  }
+  .packet-row input { width: 22px; height: 22px; flex: 0 0 auto; }
+  .packet-row .pname { font-weight: 600; }
+  .packet-row .pcount { color: var(--muted); font-size: 0.9rem; }
+  .row-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 14px; }
+
+  /* Quiz screen */
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .progress { height: 10px; background: var(--bar-bg); border-radius: 999px; overflow: hidden; margin-bottom: 14px; }
+  .progress > div { height: 100%; background: var(--accent); width: 0; transition: width 0.25s ease; }
+  .tag {
+    display: inline-block; font-size: 0.82rem; font-weight: 600;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .opts { display: grid; gap: 10px; margin-top: 8px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px;
+    text-align: left; width: 100%;
+    background: var(--card); color: var(--text);
+    border: 2px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; min-height: 52px;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt .letter {
+    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--border); display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+  }
+  .opt .otext { flex: 1 1 auto; padding-top: 2px; }
+  .opt .mark { flex: 0 0 auto; font-weight: 700; font-size: 0.85rem; padding-top: 4px; }
+  .opt.correct { border-color: var(--good); background: var(--good-bg); }
+  .opt.correct .letter { border-color: var(--good); color: var(--good); }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-bg); }
+  .opt.wrong .letter { border-color: var(--bad); color: var(--bad); }
+  .opt:disabled { cursor: default; opacity: 1; }
+  .opt.dim { opacity: 0.6; }
+
+  .numrow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 8px; }
+  .numrow input[type="text"] {
+    font: inherit; width: 220px; max-width: 100%; padding: 12px 12px; min-height: 48px;
+    border: 2px solid var(--border); border-radius: 10px;
+    background: var(--card); color: var(--text);
+  }
+  .numrow .unit { font-weight: 600; }
+  .signbtn {
+    background: var(--card); color: var(--text);
+    border: 2px solid var(--border); border-radius: 10px;
+    min-width: 48px; min-height: 48px; font-weight: 700; font-size: 1.1rem;
+  }
+  .dirs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+  .dirs .dirlabel { font-weight: 600; margin-right: 4px; }
+  .dirs label {
+    border: 2px solid var(--border); border-radius: 10px;
+    padding: 10px 16px; min-height: 48px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    background: var(--card);
+  }
+  .dirs input { width: 20px; height: 20px; }
+  .hint { margin-top: 10px; color: var(--muted); font-size: 0.92rem; }
+  .msg { margin-top: 10px; font-weight: 600; color: var(--bad); }
+
+  .feedback { margin-top: 16px; border-radius: 10px; padding: 14px 16px; border: 2px solid; }
+  .feedback.good { background: var(--good-bg); border-color: var(--good); }
+  .feedback.bad { background: var(--bad-bg); border-color: var(--bad); }
+  .feedback .ftitle { font-weight: 700; margin-bottom: 4px; }
+  .feedback.good .ftitle { color: var(--good); }
+  .feedback.bad .ftitle { color: var(--bad); }
+  .nextrow { margin-top: 16px; display: flex; justify-content: flex-end; }
+
+  /* Results */
+  .bigscore { font-size: 3rem; font-weight: 800; line-height: 1; color: var(--accent); }
+  .packet-result { margin-bottom: 16px; }
+  .pr-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-weight: 600; margin-bottom: 6px; }
+  .bar { height: 16px; border-radius: 999px; background: var(--bar-bg); overflow: hidden; }
+  .bar > div { height: 100%; border-radius: 999px; background: var(--accent); }
+  .bar > div.great { background: var(--good); }
+  .bar > div.low { background: var(--bad); }
+  .status { font-size: 0.9rem; margin-top: 4px; color: var(--muted); }
+  .missed {
+    border: 1px solid var(--border); border-left: 6px solid var(--bad);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; background: var(--card);
+  }
+  .missed .mq { font-weight: 600; margin-bottom: 8px; }
+  .missed .line { margin: 4px 0; }
+  .missed .lbl { font-weight: 700; }
+  .results-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Unit 1 Review: Motion, Forces, and Newton's Laws</h1>
+    <p>Physical Science | Dr. Mabe</p>
+  </header>
+
+  <noscript><div class="card">This review needs JavaScript turned on to work.</div></noscript>
+
+  <!-- START -->
+  <section id="screen-start" class="card">
+    <h2>Choose what to review</h2>
+    <p class="muted small" style="margin-top:0">Each section matches one of your guided notes packets. When you finish, you will see your percent for each packet so you know what to study.</p>
+    <div id="packetList"></div>
+    <label class="packet-row" style="margin-top:12px">
+      <input type="checkbox" id="shuffleBox" checked>
+      <span><span class="pname">Mix up the question order</span><br><span class="pcount">Turn this off to go through each packet in order.</span></span>
+    </label>
+    <div class="row-actions">
+      <button class="btn" id="startBtn">Start review</button>
+      <span class="small muted" id="startCount"></span>
+    </div>
+    <p class="small muted" style="margin-bottom:0">Math questions: type your number and the unit, like 12 m/s. Just like on the test, a missing or wrong unit counts as wrong. Use the &plusmn; button to switch an answer between positive and negative. Nothing you enter is saved or sent anywhere.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="screen-quiz" hidden>
+    <div class="topbar">
+      <div id="progressText" class="small muted" aria-live="polite"></div>
+      <button class="linkbtn small" id="endEarlyBtn">End review and see results</button>
+    </div>
+    <div class="progress" aria-hidden="true"><div id="progressFill"></div></div>
+    <div class="card">
+      <div class="tag" id="packetTag"></div>
+      <h2 id="questionText"></h2>
+      <div id="answerArea"></div>
+      <div id="feedbackArea" aria-live="polite"></div>
+      <div class="nextrow"><button class="btn" id="nextBtn" hidden>Next question</button></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="screen-results" hidden>
+    <div class="card">
+      <h2 id="resultsTitle">Your results</h2>
+      <div class="bigscore" id="bigScore"></div>
+      <p id="bigScoreSub" class="muted" style="margin-top:6px"></p>
+    </div>
+    <div class="card">
+      <h2>Your score on each guided notes packet</h2>
+      <div id="packetResults"></div>
+    </div>
+    <div class="card">
+      <h2 id="missedTitle">Questions to look at again</h2>
+      <div id="missedList"></div>
+    </div>
+    <div class="results-actions">
+      <button class="btn" id="retryBtn">Retry the ones I missed</button>
+      <button class="btn secondary" id="restartBtn">Start over</button>
+    </div>
+  </section>
+</div>
+
+<script>
+"use strict";
+
+/* ------------------------------------------------------------
+   PACKETS (one per guided notes packet)
+------------------------------------------------------------ */
+const PACKETS = [
+  { id: "motion", name: "Matter in Motion Guided Notes" },
+  { id: "accel",  name: "Acceleration and Graphing Guided Notes" },
+  { id: "grav",   name: "Gravity and Friction Guided Notes" },
+  { id: "first",  name: "Newton's First Law Guided Notes" },
+  { id: "second", name: "Newton's 2nd and 3rd Laws Guided Notes" }
+];
+
+/* ------------------------------------------------------------
+   QUESTION BANK
+   type "mc": options[0] is the correct answer (options get shuffled on screen)
+   type "num": answer (number), unit, optional dirs[] + dirAnswer, optional hint
+------------------------------------------------------------ */
+const BANK = [
+
+/* ===================== MATTER IN MOTION ===================== */
+{ packet: "motion", type: "mc",
+  q: "Two passengers sit across the aisle from each other on a moving train. Compared to each other, are they moving?",
+  options: [
+    "No, their positions relative to each other are not changing",
+    "Yes, they are moving at the speed of the train",
+    "Yes, because everything on a train is in motion",
+    "No, because motion cannot be measured on a train"
+  ],
+  why: "Motion depends on the reference point. Compared to each other, the passengers do not change position. Compared to the ground outside, both of them are moving." },
+
+{ packet: "motion", type: "mc",
+  q: "Which is the best reference point for describing how fast a car is moving down a road?",
+  options: [
+    "A mailbox beside the road",
+    "The driver's seat inside the car",
+    "A passenger riding in the car",
+    "The hood ornament on the car"
+  ],
+  why: "A reference point is something assumed to be still. Anything inside the car moves along with it, so it would always look like the car is not moving." },
+
+{ packet: "motion", type: "mc",
+  q: "A hiker walks 9 km east and then 4 km west. What are her distance and displacement?",
+  options: [
+    "Distance 13 km, displacement 5 km east",
+    "Distance 5 km, displacement 13 km east",
+    "Distance 13 km, displacement 13 km east",
+    "Distance 5 km, displacement 5 km west"
+  ],
+  why: "Distance adds up the whole path: 9 + 4 = 13 km. Displacement is the straight-line change from the start, so the two trips in opposite directions subtract: 9 \u2212 4 = 5 km east." },
+
+{ packet: "motion", type: "mc",
+  q: "A runner completes one full lap around a 400 m track and stops at her starting line. What are her distance and displacement?",
+  options: [
+    "Distance 400 m, displacement 0 m",
+    "Distance 0 m, displacement 400 m",
+    "Distance 400 m, displacement 400 m",
+    "Distance 200 m, displacement 200 m"
+  ],
+  why: "She traveled 400 m along the path. She finished where she started, so her change in position, her displacement, is 0 m." },
+
+{ packet: "motion", type: "mc",
+  q: "A cyclist rides at 6 m/s north, then turns around and rides at 6 m/s south. Which statement is true?",
+  options: [
+    "His speed stayed the same, but his velocity changed",
+    "His speed changed, but his velocity stayed the same",
+    "Both his speed and his velocity stayed the same",
+    "Both his speed and his velocity changed"
+  ],
+  why: "Speed has no direction, so 6 m/s is 6 m/s either way. Velocity includes direction, so north and south are different velocities." },
+
+{ packet: "motion", type: "mc",
+  q: "A car travels 180 km in 3 hours, including a few stops. What does 60 km/h describe?",
+  options: [
+    "The car's average speed",
+    "The car's instantaneous speed",
+    "The car's displacement",
+    "The car's acceleration"
+  ],
+  why: "Total distance divided by total time gives average speed: 180 \u00f7 3 = 60 km/h." },
+
+{ packet: "motion", type: "mc",
+  q: "At the exact moment you glance at a speedometer, it reads 35 mph. What does this reading show?",
+  options: [
+    "The car's instantaneous speed",
+    "The car's average speed for the whole trip",
+    "The car's velocity",
+    "The car's acceleration"
+  ],
+  why: "A reading at one exact moment is instantaneous speed. It has no direction, so it is not a velocity." },
+
+{ packet: "motion", type: "num",
+  q: "A student walks 14 m east and then 6 m west. What is her displacement?",
+  answer: 8, unit: "m", dirs: ["east", "west"], dirAnswer: "east",
+  why: "Opposite directions subtract: 14 \u2212 6 = 8 m. The bigger part of the trip was east, so the displacement is 8 m east." },
+
+{ packet: "motion", type: "num",
+  q: "A swimmer covers 100 m in 40 s. What is her average speed?",
+  answer: 2.5, unit: "m/s",
+  why: "speed = distance \u00f7 time = 100 m \u00f7 40 s = 2.5 m/s." },
+
+{ packet: "motion", type: "num",
+  q: "A train travels at a constant speed of 30 m/s for 20 s. How far does it travel?",
+  answer: 600, unit: "m",
+  why: "distance = speed \u00d7 time = 30 m/s \u00d7 20 s = 600 m." },
+
+{ packet: "motion", type: "num",
+  q: "A hiker walks 900 m at a constant speed of 1.5 m/s. How long does the walk take?",
+  answer: 600, unit: "s",
+  why: "time = distance \u00f7 speed = 900 m \u00f7 1.5 m/s = 600 s." },
+
+{ packet: "motion", type: "num",
+  q: "A drone flies 240 m north in 30 s. What is its velocity?",
+  answer: 8, unit: "m/s", dirs: ["north", "south"], dirAnswer: "north",
+  why: "velocity = displacement \u00f7 time = 240 m \u00f7 30 s = 8 m/s. Velocity includes direction, so the answer is 8 m/s north." },
+
+/* ===================== ACCELERATION AND GRAPHING ===================== */
+{ packet: "accel", type: "mc",
+  q: "Which situation shows acceleration?",
+  options: [
+    "A bicycle slowing down as it approaches a stop sign",
+    "A car traveling at a steady 30 m/s on a straight highway",
+    "A box sitting on a shelf",
+    "A runner jogging at a constant speed in a straight line"
+  ],
+  why: "Acceleration is a change in velocity. Slowing down is a change in velocity. The other examples have a constant velocity or no motion at all." },
+
+{ packet: "accel", type: "mc",
+  q: "Which change would give an object the greatest acceleration?",
+  options: [
+    "Gaining 20 m/s in 4 seconds",
+    "Gaining 20 m/s in 10 seconds",
+    "Gaining 10 m/s in 4 seconds",
+    "Gaining 10 m/s in 10 seconds"
+  ],
+  why: "Acceleration = change in velocity \u00f7 time. 20 \u00f7 4 = 5 m/s\u00b2, which is greater than 2 m/s\u00b2, 2.5 m/s\u00b2, or 1 m/s\u00b2." },
+
+{ packet: "accel", type: "mc",
+  q: "A car moving forward has a negative acceleration. What is the car doing?",
+  options: [
+    "Slowing down",
+    "Speeding up",
+    "Moving at a constant speed",
+    "Moving backward"
+  ],
+  why: "For an object moving forward, a negative acceleration means its velocity is getting smaller, so it is slowing down." },
+
+{ packet: "accel", type: "mc",
+  q: "A distance-time graph shows a line that curves upward and gets steeper. What does this show?",
+  options: [
+    "The object is speeding up",
+    "The object is at rest",
+    "The object is moving at a constant speed",
+    "The object is slowing down"
+  ],
+  why: "A steeper line means faster motion. A line that keeps getting steeper shows the speed increasing, so the object is accelerating." },
+
+{ packet: "accel", type: "mc",
+  q: "Which axis scale follows the rule for a good graph?",
+  options: [
+    "0, 5, 10, 15, 20",
+    "0, 5, 10, 20, 25",
+    "0, 2, 10, 12, 20",
+    "0, 10, 15, 40, 50"
+  ],
+  why: "Every box on an axis has to stand for the same amount, so the increments must be even. Only 0, 5, 10, 15, 20 goes up by the same amount each time." },
+
+{ packet: "accel", type: "mc",
+  q: "On a distance-time graph, Runner X's line is flatter than Runner Y's line. Which statement is true?",
+  options: [
+    "Runner Y is moving faster",
+    "Runner X is moving faster",
+    "Both runners are moving at the same speed",
+    "Runner X is accelerating and Runner Y is not"
+  ],
+  why: "A steeper line covers more distance in each second, so Runner Y is moving faster." },
+
+{ packet: "accel", type: "num",
+  q: "A skateboarder speeds up from 1 m/s to 9 m/s in 4 s. What is her acceleration?",
+  answer: 2, unit: "m/s\u00b2",
+  why: "acceleration = (final velocity \u2212 initial velocity) \u00f7 time = (9 \u2212 1) \u00f7 4 = 2 m/s\u00b2." },
+
+{ packet: "accel", type: "num",
+  q: "A cyclist slows from 12 m/s to 4 m/s in 4 s. What is her acceleration?",
+  answer: -2, unit: "m/s\u00b2",
+  hint: "Use a negative sign if the object is slowing down.",
+  why: "acceleration = (4 \u2212 12) \u00f7 4 = \u22122 m/s\u00b2. The negative sign shows she is slowing down." },
+
+{ packet: "accel", type: "num",
+  q: "A rocket sled starts at rest and accelerates at 6 m/s\u00b2 for 5 s. What is its final velocity?",
+  answer: 30, unit: "m/s",
+  why: "final velocity = initial velocity + (acceleration \u00d7 time) = 0 + (6 \u00d7 5) = 30 m/s." },
+
+{ packet: "accel", type: "num",
+  q: "A car speeds up from 5 m/s to 25 m/s at a rate of 4 m/s\u00b2. How long does this take?",
+  answer: 5, unit: "s",
+  why: "time = (final velocity \u2212 initial velocity) \u00f7 acceleration = (25 \u2212 5) \u00f7 4 = 5 s." },
+
+{ packet: "accel", type: "num",
+  q: "A runner reaches a velocity of 11 m/s after accelerating at 2 m/s\u00b2 for 4 s. What was her starting velocity?",
+  answer: 3, unit: "m/s",
+  why: "initial velocity = final velocity \u2212 (acceleration \u00d7 time) = 11 \u2212 (2 \u00d7 4) = 3 m/s." },
+
+{ packet: "accel", type: "num",
+  q: "On a distance-time graph, a straight line goes from 0 m at 0 s to 60 m at 12 s. What is the slope of the line, which is also the object's speed?",
+  answer: 5, unit: "m/s",
+  why: "slope = rise \u00f7 run = 60 m \u00f7 12 s = 5 m/s." },
+
+/* ===================== GRAVITY AND FRICTION ===================== */
+{ packet: "grav", type: "mc",
+  q: "Which of these is a contact force?",
+  options: [
+    "A person kicking a soccer ball",
+    "A magnet pulling a paper clip",
+    "Static electricity making hair stand up",
+    "Gravity pulling an apple off a tree"
+  ],
+  why: "A contact force needs the objects to touch. Magnets, static electricity, and gravity are noncontact forces." },
+
+{ packet: "grav", type: "mc",
+  q: "What happens to the gravitational force between two objects as the distance between them increases?",
+  options: [
+    "It decreases",
+    "It increases",
+    "It stays the same",
+    "It turns into friction"
+  ],
+  why: "More distance means less pull. The mass of the objects and the distance between them control the strength of gravity." },
+
+{ packet: "grav", type: "mc",
+  q: "The mass of one object increases, but the distance between it and a second object stays the same. What happens to the gravitational force between them?",
+  options: [
+    "It increases",
+    "It decreases",
+    "It stays the same",
+    "It disappears"
+  ],
+  why: "More mass means more pull. Gravity gets stronger when the mass of either object increases." },
+
+{ packet: "grav", type: "mc",
+  q: "Which statement correctly compares mass and weight?",
+  options: [
+    "Mass is measured in kilograms and weight is measured in newtons",
+    "Mass is the pull of gravity on an object, and weight is how much matter it has",
+    "Mass and weight are measured in the same unit",
+    "Weight stays the same everywhere, but mass changes with location"
+  ],
+  why: "Mass is the amount of matter in an object (kg) and does not change. Weight is the force of gravity on the object (N) and changes with location." },
+
+{ packet: "grav", type: "mc",
+  q: "A 70 kg student visits a planet with stronger gravity than Earth. How do her mass and weight on that planet compare to Earth?",
+  options: [
+    "Her mass is the same and her weight is greater",
+    "Her mass is greater and her weight is the same",
+    "Her mass and her weight are both greater",
+    "Her mass and her weight are both the same"
+  ],
+  why: "Mass is the amount of matter, which does not change. Stronger gravity pulls harder, so her weight is greater." },
+
+{ packet: "grav", type: "mc",
+  q: "A box slides across the floor and gradually stops. Which type of friction is slowing it down?",
+  options: [
+    "Sliding friction",
+    "Static friction",
+    "Fluid friction",
+    "No friction is needed, since objects naturally stop"
+  ],
+  why: "Sliding friction opposes the motion of surfaces that are already sliding past each other. Objects only stop because a force, like friction, acts on them." },
+
+{ packet: "grav", type: "mc",
+  q: "A paper airplane is slowed down by the air as it flies. Which type of friction is this?",
+  options: [
+    "Fluid friction",
+    "Static friction",
+    "Sliding friction",
+    "Gravity"
+  ],
+  why: "Fluid friction is friction between a surface and a fluid, such as air or water. Air resistance is fluid friction." },
+
+{ packet: "grav", type: "mc",
+  q: "Why does putting oil between the moving parts of an engine reduce friction?",
+  options: [
+    "It separates the surfaces so fewer bumps and electrical attractions touch",
+    "It makes the surfaces rougher so they grip each other",
+    "It increases the force pressing the surfaces together",
+    "It removes gravity from the engine parts"
+  ],
+  why: "A lubricant keeps the surfaces slightly apart, so there is less catching of microscopic bumps and fewer electrical attractions." },
+
+/* ===================== NEWTON'S FIRST LAW ===================== */
+{ packet: "first", type: "mc",
+  q: "Inertia is best described as:",
+  options: [
+    "The tendency of an object to resist a change in its motion",
+    "A force that keeps objects moving",
+    "The speed an object has at one moment",
+    "The pull of gravity on an object"
+  ],
+  why: "Inertia is not a force. It is the tendency of an object to keep its current motion, and an object's mass is a measure of its inertia." },
+
+{ packet: "first", type: "mc",
+  q: "A car stops suddenly and a passenger without a seat belt lurches forward. Which idea explains this?",
+  options: [
+    "The passenger's inertia keeps her moving forward as the car stops",
+    "The car pushes the passenger forward with a force",
+    "Gravity pulls the passenger toward the windshield",
+    "Friction speeds the passenger up"
+  ],
+  why: "The car stops because of the brakes, but the passenger keeps moving at the same velocity until a force acts on her. That is inertia." },
+
+{ packet: "first", type: "mc",
+  q: "What is true about the forces on an object when the net force is 0 N?",
+  options: [
+    "The forces are balanced",
+    "The forces are unbalanced",
+    "No forces are acting on the object",
+    "Only gravity is acting on the object"
+  ],
+  why: "A net force of 0 N means the forces cancel out, so they are balanced. Forces can still be acting on the object." },
+
+{ packet: "first", type: "mc",
+  q: "A hockey puck slides far across ice but stops quickly on carpet. What is the best explanation?",
+  options: [
+    "Carpet creates more friction, so the unbalanced force stopping the puck is larger",
+    "The ice gives the puck more inertia than the carpet does",
+    "The puck has less mass when it is on the ice",
+    "Gravity is weaker on ice than on carpet"
+  ],
+  why: "Friction is an unbalanced force that changes the puck's motion. Carpet has more friction than ice, so it stops the puck faster." },
+
+{ packet: "first", type: "mc",
+  q: "A box slides across a floor at a constant velocity. How does the applied push compare to the friction force?",
+  options: [
+    "They are equal in size",
+    "The push is greater than the friction force",
+    "The push is smaller than the friction force",
+    "There is no friction force"
+  ],
+  why: "A constant velocity means the net force is 0 N. The push and the friction force must be balanced, so they are equal in size." },
+
+{ packet: "first", type: "mc",
+  q: "Early in a skydiver's fall, before she reaches terminal velocity, the net force on her is:",
+  options: [
+    "Greater than zero, so she speeds up",
+    "Zero, so she falls at a steady speed",
+    "Zero, because gravity has not started pulling yet",
+    "Greater than zero, so she slows down"
+  ],
+  why: "At first, gravity is greater than air resistance, so the forces are unbalanced and she accelerates downward. At terminal velocity the forces become balanced." },
+
+{ packet: "first", type: "num",
+  q: "A box is pushed to the right with 200 N and to the left with 70 N. What is the net force on the box?",
+  answer: 130, unit: "N", dirs: ["right", "left"], dirAnswer: "right",
+  why: "Forces in opposite directions subtract: 200 \u2212 70 = 130 N. The larger force is to the right, so the net force is 130 N to the right." },
+
+/* ===================== NEWTON'S 2ND AND 3RD LAWS ===================== */
+{ packet: "second", type: "mc",
+  q: "A student pushes a wagon with more and more force while its mass stays the same. What happens to the wagon's acceleration?",
+  options: [
+    "It increases",
+    "It decreases",
+    "It stays the same",
+    "It becomes zero"
+  ],
+  why: "Newton's second law: acceleration = force \u00f7 mass. If the mass stays the same, more force means more acceleration." },
+
+{ packet: "second", type: "mc",
+  q: "A 20 N force is applied to an object. Which change would double the object's acceleration?",
+  options: [
+    "Increasing the force to 40 N",
+    "Doubling the mass of the object",
+    "Decreasing the force to 10 N",
+    "Pushing the object for twice as long"
+  ],
+  why: "a = F \u00f7 m. Doubling the force doubles the acceleration. Doubling the mass would cut the acceleration in half." },
+
+{ packet: "second", type: "mc",
+  q: "Which equation shows Newton's second law?",
+  options: [
+    "F = m \u00d7 a",
+    "F = m \u00f7 a",
+    "a = F \u00d7 m",
+    "m = F \u00d7 a"
+  ],
+  why: "Force equals mass times acceleration. It can be rearranged to a = F \u00f7 m or m = F \u00f7 a." },
+
+{ packet: "second", type: "mc",
+  q: "A force that pulls an object toward the center of a circular path is called:",
+  options: [
+    "Centripetal force",
+    "Inertia",
+    "Sliding friction",
+    "Momentum"
+  ],
+  why: "Centripetal force acts toward the center of the curve. It changes the object's direction so it follows a circular path." },
+
+{ packet: "second", type: "mc",
+  q: "Newton's third law says that for every action force there is:",
+  options: [
+    "An equal and opposite reaction force",
+    "A larger reaction force in the same direction",
+    "A smaller reaction force in the opposite direction",
+    "A reaction force only if the objects are moving"
+  ],
+  why: "Forces always come in pairs. The two forces in a pair are equal in size, opposite in direction, and act on different objects." },
+
+{ packet: "second", type: "mc",
+  q: "A rocket's engines push hot gas downward, and the rocket rises. What is the reaction force?",
+  options: [
+    "The gas pushing the rocket upward",
+    "Gravity pulling the rocket downward",
+    "Air resistance pushing the rocket downward",
+    "The weight of the rocket"
+  ],
+  why: "The rocket pushes the gas down (action), and the gas pushes the rocket up (reaction). The pair acts on two different objects." },
+
+{ packet: "second", type: "mc",
+  q: "Which has more momentum: a 1 kg ball moving at 12 m/s or a 5 kg ball moving at 2 m/s?",
+  options: [
+    "The 1 kg ball",
+    "The 5 kg ball",
+    "They have the same momentum",
+    "It cannot be determined without knowing the direction"
+  ],
+  why: "momentum = mass \u00d7 velocity. The 1 kg ball has 1 \u00d7 12 = 12 kg\u00b7m/s and the 5 kg ball has 5 \u00d7 2 = 10 kg\u00b7m/s." },
+
+{ packet: "second", type: "mc",
+  q: "Two objects collide and bounce apart. What does the law of conservation of momentum say?",
+  options: [
+    "The total momentum of the objects stays the same",
+    "The objects lose all of their momentum",
+    "The faster object keeps all of the momentum",
+    "The total momentum doubles"
+  ],
+  why: "Objects can pass momentum to each other in a collision, but the total amount of momentum is conserved." },
+
+{ packet: "second", type: "num",
+  q: "A 9 kg cart accelerates at 3 m/s\u00b2. What net force acts on the cart?",
+  answer: 27, unit: "N",
+  why: "F = m \u00d7 a = 9 kg \u00d7 3 m/s\u00b2 = 27 N." },
+
+{ packet: "second", type: "num",
+  q: "A net force of 80 N pushes a 16 kg sled. What is the sled's acceleration?",
+  answer: 5, unit: "m/s\u00b2",
+  why: "a = F \u00f7 m = 80 N \u00f7 16 kg = 5 m/s\u00b2." },
+
+{ packet: "second", type: "num",
+  q: "A net force of 72 N makes an object accelerate at 8 m/s\u00b2. What is the object's mass?",
+  answer: 9, unit: "kg",
+  why: "m = F \u00f7 a = 72 N \u00f7 8 m/s\u00b2 = 9 kg." },
+
+{ packet: "second", type: "num",
+  q: "Two students push a 30 kg crate in opposite directions. One pushes right with 100 N and the other pushes left with 40 N. What is the crate's acceleration?",
+  answer: 2, unit: "m/s\u00b2", dirs: ["right", "left"], dirAnswer: "right",
+  hint: "Find the net force first, then divide by the mass.",
+  why: "Net force = 100 \u2212 40 = 60 N to the right. a = F \u00f7 m = 60 N \u00f7 30 kg = 2 m/s\u00b2 to the right." },
+
+{ packet: "second", type: "num",
+  q: "A 50 kg skater glides at 4 m/s. What is her momentum?",
+  answer: 200, unit: "kg\u00b7m/s",
+  why: "p = m \u00d7 v = 50 kg \u00d7 4 m/s = 200 kg\u00b7m/s." },
+
+{ packet: "second", type: "num",
+  q: "A 2 kg ball has a momentum of 18 kg\u00b7m/s. What is its velocity?",
+  answer: 9, unit: "m/s",
+  why: "v = p \u00f7 m = 18 kg\u00b7m/s \u00f7 2 kg = 9 m/s." },
+
+{ packet: "second", type: "num",
+  q: "A cyclist and bike travel at 6 m/s and have a momentum of 420 kg\u00b7m/s. What is their combined mass?",
+  answer: 70, unit: "kg",
+  why: "m = p \u00f7 v = 420 kg\u00b7m/s \u00f7 6 m/s = 70 kg." }
+];
+
+/* ------------------------------------------------------------
+   HELPERS
+------------------------------------------------------------ */
+const $ = (id) => document.getElementById(id);
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function packetName(id) {
+  const p = PACKETS.find((x) => x.id === id);
+  return p ? p.name : id;
+}
+
+function fmtNum(n) {
+  return String(n).replace("-", "\u2212");
+}
+
+function parseNum(s) {
+  const cleaned = String(s).replace(/[,\s]/g, "").replace(/[\u2212\u2013\u2014]/g, "-");
+  if (!/^-?(\d+\.?\d*|\.\d+)$/.test(cleaned)) return NaN;
+  return Number(cleaned);
+}
+
+function closeEnough(val, ans) {
+  return Math.abs(val - ans) <= Math.max(0.01, Math.abs(ans) * 0.001);
+}
+
+
+const UNIT_FORMS = {
+  "m":      ["m", "meter", "meters", "metre", "metres"],
+  "s":      ["s", "sec", "secs", "second", "seconds"],
+  "kg":     ["kg", "kilogram", "kilograms"],
+  "N":      ["n", "newton", "newtons"],
+  "m/s":    ["m/s", "meterspersecond", "meterpersecond", "metrespersecond"],
+  "m/s\u00b2": ["m/s2", "m/s/s", "meterspersecondsquared", "meterspersecondpersecond", "meterpersecondsquared", "m/ssquared"],
+  "kg\u00b7m/s": ["kgm/s", "kilogrammeterspersecond", "kilogrammeterpersecond"]
+};
+
+function normUnit(u) {
+  return String(u).toLowerCase()
+    .replace(/\u00b2/g, "2")
+    .replace(/[\u00b7*\u2022.^\s]/g, "");
+}
+
+function unitOK(typed, canonical) {
+  const t = normUnit(typed);
+  if (t === "") return false;
+  const forms = UNIT_FORMS[canonical] || [canonical];
+  return forms.map(normUnit).includes(t);
+}
+
+// Splits "8 m/s" into { numText: "8", unitText: "m/s" }. Returns null if there is no leading number.
+function splitAnswer(raw) {
+  const cleaned = String(raw).trim().replace(/[\u2212\u2013\u2014]/g, "-");
+  const m = cleaned.match(/^(-?\s*(?:\d[\d,]*\.?\d*|\.\d+))\s*(.*)$/);
+  if (!m) return null;
+  return { numText: m[1].replace(/\s/g, ""), unitText: m[2].trim() };
+}
+
+function el(tag, props, ...kids) {
+  const node = document.createElement(tag);
+  if (props) {
+    for (const k of Object.keys(props)) {
+      if (k === "class") node.className = props[k];
+      else if (k === "text") node.textContent = props[k];
+      else node.setAttribute(k, props[k]);
+    }
+  }
+  kids.forEach((kid) => {
+    if (kid == null) return;
+    node.appendChild(typeof kid === "string" ? document.createTextNode(kid) : kid);
+  });
+  return node;
+}
+
+function show(screenId) {
+  ["screen-start", "screen-quiz", "screen-results"].forEach((id) => {
+    $(id).hidden = id !== screenId;
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ------------------------------------------------------------
+   START SCREEN
+------------------------------------------------------------ */
+function buildStart() {
+  const list = $("packetList");
+  list.textContent = "";
+  PACKETS.forEach((p) => {
+    const count = BANK.filter((q) => q.packet === p.id).length;
+    const cb = el("input", { type: "checkbox", id: "pk-" + p.id });
+    cb.checked = true;
+    cb.addEventListener("change", updateStartCount);
+    const label = el("label", { class: "packet-row", for: "pk-" + p.id },
+      cb,
+      el("span", null,
+        el("span", { class: "pname", text: p.name }),
+        el("br"),
+        el("span", { class: "pcount", text: count + " questions" })
+      )
+    );
+    list.appendChild(label);
+  });
+  updateStartCount();
+}
+
+function selectedPackets() {
+  return PACKETS.filter((p) => $("pk-" + p.id).checked).map((p) => p.id);
+}
+
+function updateStartCount() {
+  const ids = selectedPackets();
+  const n = BANK.filter((q) => ids.includes(q.packet)).length;
+  $("startCount").textContent = n + " questions selected";
+  $("startBtn").disabled = n === 0;
+}
+
+/* ------------------------------------------------------------
+   SESSION
+------------------------------------------------------------ */
+let session = null;
+
+function makeItem(q) {
+  const item = { q: q };
+  if (q.type === "mc") {
+    item.opts = shuffle(q.options.map((text, i) => ({ text: text, correct: i === 0 })));
+  }
+  return item;
+}
+
+function startSession(questions, isRetry) {
+  session = {
+    queue: questions.map(makeItem),
+    i: 0,
+    results: [],
+    isRetry: !!isRetry,
+    answered: false
+  };
+  show("screen-quiz");
+  renderQuestion();
+}
+
+function startFromSelection() {
+  const ids = selectedPackets();
+  let qs = BANK.filter((q) => ids.includes(q.packet));
+  if ($("shuffleBox").checked) qs = shuffle(qs);
+  if (qs.length === 0) return;
+  startSession(qs, false);
+}
+
+function renderQuestion() {
+  const item = session.queue[session.i];
+  const q = item.q;
+  session.answered = false;
+
+  $("progressText").textContent =
+    (session.isRetry ? "Retry round: " : "") +
+    "Question " + (session.i + 1) + " of " + session.queue.length;
+  $("progressFill").style.width = (session.i / session.queue.length * 100) + "%";
+  $("packetTag").textContent = packetName(q.packet);
+  $("questionText").textContent = q.q;
+  $("feedbackArea").textContent = "";
+  $("nextBtn").hidden = true;
+  $("nextBtn").textContent = session.i === session.queue.length - 1 ? "See my results" : "Next question";
+
+  const area = $("answerArea");
+  area.textContent = "";
+
+  if (q.type === "mc") {
+    const wrap = el("div", { class: "opts", role: "group", "aria-label": "Answer choices" });
+    item.opts.forEach((o, idx) => {
+      const b = el("button", { class: "opt", type: "button" },
+        el("span", { class: "letter", text: "ABCD"[idx] }),
+        el("span", { class: "otext", text: o.text }),
+        el("span", { class: "mark" })
+      );
+      b.addEventListener("click", () => answerMC(item, idx));
+      wrap.appendChild(b);
+    });
+    area.appendChild(wrap);
+  } else {
+    const input = el("input", {
+      type: "text", id: "numInput", autocomplete: "off", autocapitalize: "off",
+      autocorrect: "off", spellcheck: "false", "aria-label": "Your answer"
+    });
+    const signBtn = el("button", { class: "signbtn", type: "button", "aria-label": "Switch between positive and negative", text: "\u00b1" });
+    signBtn.addEventListener("click", () => {
+      const v = input.value.trim();
+      if (v.startsWith("-") || v.startsWith("\u2212")) input.value = v.slice(1);
+      else input.value = "-" + v;
+      input.focus();
+    });
+    const row = el("div", { class: "numrow" }, input, signBtn);
+    area.appendChild(row);
+    area.appendChild(el("div", { class: "hint", text: "Type your number and the unit, like 12 kg." }));
+
+    if (q.dirs) {
+      const dirWrap = el("div", { class: "dirs", role: "radiogroup", "aria-label": "Direction" },
+        el("span", { class: "dirlabel", text: "Direction:" }));
+      q.dirs.forEach((d) => {
+        const r = el("input", { type: "radio", name: "dir", value: d });
+        dirWrap.appendChild(el("label", null, r, d));
+      });
+      area.appendChild(dirWrap);
+    }
+    if (q.hint) area.appendChild(el("div", { class: "hint", text: "Hint: " + q.hint }));
+    area.appendChild(el("div", { class: "msg", id: "numMsg", "aria-live": "polite" }));
+    const check = el("button", { class: "btn", type: "button", id: "checkBtn", text: "Check my answer" });
+    check.style.marginTop = "14px";
+    check.addEventListener("click", () => answerNum(item));
+    area.appendChild(check);
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); answerNum(item); } });
+    setTimeout(() => input.focus(), 50);
+  }
+}
+
+function showFeedback(isCorrect, headline, detail, why) {
+  const box = el("div", { class: "feedback " + (isCorrect ? "good" : "bad") },
+    el("div", { class: "ftitle", text: (isCorrect ? "\u2713 " : "\u2717 ") + headline }),
+    detail ? el("div", { text: detail }) : null,
+    el("div", { style: "margin-top:6px", text: why })
+  );
+  const fa = $("feedbackArea");
+  fa.textContent = "";
+  fa.appendChild(box);
+  const nb = $("nextBtn");
+  nb.hidden = false;
+  nb.focus();
+}
+
+function answerMC(item, chosenIdx) {
+  if (session.answered) return;
+  session.answered = true;
+  const q = item.q;
+  const buttons = $("answerArea").querySelectorAll(".opt");
+  const correctIdx = item.opts.findIndex((o) => o.correct);
+  const isCorrect = chosenIdx === correctIdx;
+
+  buttons.forEach((b, idx) => {
+    b.disabled = true;
+    const mark = b.querySelector(".mark");
+    if (idx === correctIdx) { b.classList.add("correct"); mark.textContent = "\u2713 Correct answer"; }
+    else if (idx === chosenIdx) { b.classList.add("wrong"); mark.textContent = "\u2717 Your answer"; }
+    else b.classList.add("dim");
+  });
+
+  session.results.push({
+    q: q,
+    correct: isCorrect,
+    userText: item.opts[chosenIdx].text,
+    correctText: item.opts[correctIdx].text
+  });
+  showFeedback(isCorrect, isCorrect ? "Correct!" : "Not quite.", null, q.why);
+}
+
+function answerNum(item) {
+  if (session.answered) return;
+  const q = item.q;
+  const input = $("numInput");
+  const msg = $("numMsg");
+  msg.textContent = "";
+
+  const parts = splitAnswer(input.value);
+  const val = parts ? parseNum(parts.numText) : NaN;
+  if (!parts || Number.isNaN(val)) {
+    msg.textContent = "Start with a number, then the unit, like 12 m/s.";
+    input.focus();
+    return;
+  }
+
+  // If a direction word was typed at the end of the unit, peel it off.
+  let unitText = parts.unitText;
+  let typedDir = null;
+  if (q.dirs) {
+    const low = unitText.toLowerCase();
+    for (const d of q.dirs) {
+      if (low.endsWith(d)) {
+        typedDir = d;
+        unitText = unitText.slice(0, unitText.length - d.length).trim();
+        break;
+      }
+    }
+  }
+
+  let chosenDir = null;
+  if (q.dirs) {
+    const picked = document.querySelector('input[name="dir"]:checked');
+    chosenDir = picked ? picked.value : typedDir;
+    if (!chosenDir) {
+      msg.textContent = "Pick a direction before checking.";
+      return;
+    }
+  }
+
+  session.answered = true;
+  const numOK = closeEnough(val, q.answer);
+  const uOK = unitOK(unitText, q.unit);
+  const dirOK = q.dirs ? chosenDir === q.dirAnswer : true;
+  const isCorrect = numOK && uOK && dirOK;
+
+  const correctText = fmtNum(q.answer) + " " + q.unit + (q.dirs ? " " + q.dirAnswer : "");
+  const userText = fmtNum(val) + (unitText ? " " + unitText : " (no unit)") + (chosenDir ? " " + chosenDir : "");
+
+  document.querySelectorAll("#answerArea input").forEach((n) => { n.disabled = true; });
+  document.querySelectorAll("#answerArea button").forEach((n) => { n.disabled = true; });
+
+  session.results.push({ q: q, correct: isCorrect, userText: userText, correctText: correctText });
+
+  let headline, detail;
+  if (isCorrect) {
+    headline = "Correct!";
+    detail = "Your answer: " + userText;
+  } else {
+    headline = "Not quite.";
+    if (numOK) {
+      const issues = [];
+      if (!uOK) issues.push(unitText === "" ? "you left off the unit" : "the unit is not right");
+      if (!dirOK) issues.push("check the direction");
+      detail = "Your number is right, but " + issues.join(" and ") + ". The correct answer is " + correctText + ". On the test, the unit is part of the answer.";
+    } else if (closeEnough(Math.abs(val), Math.abs(q.answer))) {
+      detail = "Right size, but check the sign. The correct answer is " + correctText + ".";
+    } else {
+      detail = "The correct answer is " + correctText + ".";
+    }
+  }
+  showFeedback(isCorrect, headline, detail, q.why);
+}
+
+function nextQuestion() {
+  if (session.i < session.queue.length - 1) {
+    session.i += 1;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+/* ------------------------------------------------------------
+   RESULTS
+------------------------------------------------------------ */
+function showResults() {
+  const results = session.results;
+  if (results.length === 0) { show("screen-start"); return; }
+
+  const right = results.filter((r) => r.correct).length;
+  const total = results.length;
+  const pct = Math.round(right / total * 100);
+
+  $("resultsTitle").textContent = session.isRetry ? "Your retry results" : "Your results";
+  $("bigScore").textContent = pct + "%";
+  $("bigScoreSub").textContent = right + " of " + total + " correct" +
+    (total < session.queue.length ? " (you ended early, so unanswered questions are not counted)" : "");
+
+  const pr = $("packetResults");
+  pr.textContent = "";
+  PACKETS.forEach((p) => {
+    const rs = results.filter((r) => r.q.packet === p.id);
+    if (rs.length === 0) return;
+    const rr = rs.filter((r) => r.correct).length;
+    const pp = Math.round(rr / rs.length * 100);
+    let cls = "", status = "";
+    if (pp >= 85) { cls = "great"; status = "Looking solid. A quick skim of this packet is enough."; }
+    else if (pp >= 70) { cls = ""; status = "Almost there. Reread the parts of this packet that match what you missed."; }
+    else { cls = "low"; status = "Needs work. Go back through this packet and redo the guided notes examples."; }
+
+    const bar = el("div", { class: "bar", role: "img", "aria-label": p.name + ": " + pp + " percent" },
+      el("div", { class: cls, style: "width:" + pp + "%" }));
+    pr.appendChild(el("div", { class: "packet-result" },
+      el("div", { class: "pr-head" }, el("span", { text: p.name }), el("span", { text: pp + "% (" + rr + " of " + rs.length + ")" })),
+      bar,
+      el("div", { class: "status", text: status })
+    ));
+  });
+
+  const missed = results.filter((r) => !r.correct);
+  const list = $("missedList");
+  list.textContent = "";
+  if (missed.length === 0) {
+    $("missedTitle").textContent = "Questions to look at again";
+    list.appendChild(el("p", { text: "You did not miss any questions. Nice work." }));
+    $("retryBtn").hidden = true;
+  } else {
+    $("missedTitle").textContent = "Questions to look at again (" + missed.length + ")";
+    const order = PACKETS.map((p) => p.id);
+    missed.slice().sort((a, b) => order.indexOf(a.q.packet) - order.indexOf(b.q.packet)).forEach((r) => {
+      list.appendChild(el("div", { class: "missed" },
+        el("div", { class: "tag", text: "Review: " + packetName(r.q.packet) }),
+        el("div", { class: "mq", text: r.q.q }),
+        el("div", { class: "line" }, el("span", { class: "lbl", text: "Your answer: " }), r.userText),
+        el("div", { class: "line" }, el("span", { class: "lbl", text: "Correct answer: " }), r.correctText),
+        el("div", { class: "line" }, el("span", { class: "lbl", text: "Why: " }), r.q.why)
+      ));
+    });
+    $("retryBtn").hidden = false;
+  }
+  show("screen-results");
+}
+
+/* ------------------------------------------------------------
+   EVENTS
+------------------------------------------------------------ */
+$("startBtn").addEventListener("click", startFromSelection);
+$("nextBtn").addEventListener("click", nextQuestion);
+$("endEarlyBtn").addEventListener("click", () => {
+  if (session && session.results.length > 0) showResults();
+  else show("screen-start");
+});
+$("retryBtn").addEventListener("click", () => {
+  const missedQs = session.results.filter((r) => !r.correct).map((r) => r.q);
+  if (missedQs.length) startSession(shuffle(missedQs), true);
+});
+$("restartBtn").addEventListener("click", () => { buildStart(); show("screen-start"); });
+
+buildStart();
+</script>
+</body>
+</html>
